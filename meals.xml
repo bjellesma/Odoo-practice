@@ -1,0 +1,74 @@
+<openerp>
+    <data>
+        <!-- Creating a new menu for meals -->
+        <record id="meal_action_dietfacts" model= "ir.actions.act_window" >
+            <field name="name" >Meals</field >
+            <field name="type" >ir.actions.act_window</field>
+            <field name="res_model" >res.users.meal</field >
+            <field name="view_mode" >tree,kanban,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create a new meal
+                </p>
+            </field>
+        </record>
+
+         
+
+        
+        <!-- The parent attribute will make it so that this appears under diet items -->
+        <menuitem action= "meal_action_dietfacts"
+            id="menu_meal_action_dietfacts" parent="menu_product_template_action_dietfacts"
+             sequence= "1" />
+
+        <!-- meal item form view -->
+        <record id="dietfacts_meal_form_view" model="ir.ui.view">
+            <!-- model is also found on the edit list view page -->
+            <field name="model">res.users.meal</field>
+            <!-- arch is where the actual view data appears -->
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" />
+                        <field name="meal_date" />
+                        <field name="user_id" />
+                        <field name="notes" />
+                        <field name="total_calories" />
+                        <field name="large_meal" />
+                    </group>
+                    <notebook>
+                        <page name="mealitems" string="Meal Items">
+                            <field name="item_ids" widget="one2many_list">
+                                <tree string="Meal Items" editable="bottom">
+                                    <field name="item_id" />
+                                    <field name="calories" />
+                                    <field name="servings" />
+                                    <field name="notes" />
+                                </tree>
+                            </field>
+                        </page>
+                        
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <!-- tree view -->
+        <record id="dietfacts_meal_tree_view" model="ir.ui.view">
+        <!-- inherit id will have odoo grant the id -->
+        <!-- the ref will be taken from the external id that you find on the edit view page -->
+            <!-- <field name="inherit_id" ref="dietfacts_meal_tree_view"/> -->
+            <!-- model is also found on the edit list view page -->
+            <field name="model">res.users.meal</field>
+            <!-- arch is where the actual view data appears -->
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" />
+                    <field name="meal_date" />
+                    <field name="user_id" />
+                    <field name="total_calories" sum="Total Calories" />
+                </tree>
+            </field>
+        </record>
+    </data>
+</openerp>

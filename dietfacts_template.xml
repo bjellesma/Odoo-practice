@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <!-- template id must must match the report file below -->
+        <template id="report_dietitems">
+        <t t-call ="web.external_layout">
+        <!-- <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)" /> -->
+        <!-- t-foreach will loop through all objects and use o as the object name -->
+        <t t-foreach ="docs" t-as ="o">
+            <div class="page" >
+                    <div class="oe_structure" />
+                    <h1>Nutrition Report</h1>
+                    <h2>Product Name: <span t-field="o.name"/></h2>
+                    <p>Calories: <span t-field="o.calories"/></p>
+                    <p>Nutrition Score: <span t-field="o.score"/></p>
+                    
+                    <h3>Nutrition Details</h3>
+                    <t t-foreach="o.nutrient_ids" t-as="line">
+                    <div class="row">
+                    <div class="col-xs-6">
+                    <span t-field="line.nutrient_id.name"/>
+                    </div>
+                    <div class="col-xs-2">
+                        <span t-field="line.value"/>
+                    </div>
+                    <div class="col-xs-4">
+                    <span t-field="line.nutrient_id.uom_id.name"/>
+                    </div>
+                    </div>
+                    </t>
+            </div>
+            </t>
+        </t>
+        </template>
+</odoo>
